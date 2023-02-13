@@ -1,5 +1,6 @@
 # Comercial-Info-ETSoftware
 Git-Repo for the Infohome Software © ET Ingenieurbüro
+Author: Martin Lackner (Phant0m-c0d3)
 
 ## 1. USAGE
 
