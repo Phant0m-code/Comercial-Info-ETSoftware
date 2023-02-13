@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -10,8 +11,6 @@ const news = [];
 const someRouter = require('./routes/pages');
 console.log('done')
 app.use(someRouter);
-
-
 
 
 app.listen(3000, () => {
