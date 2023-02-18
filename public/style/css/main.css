@@ -6,3 +6,20 @@
 body {
     background-color: beige;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.content {
+    display: none;
+    padding: 20px;
+    background-color: #ddd;
+}
+
+.content.active {
+    display: block;
+}
