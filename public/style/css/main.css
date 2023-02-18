@@ -1,6 +1,16 @@
 /* ------------ GOOGLE FONTS ------------ */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@font-face {
+    font-family: 'Blaster';
+    src: url('/fonts/blaster-font/Blaster-wow6.ttf');
+}
+
+@font-face {
+    font-family: 'Neuropol';
+    src: url('/fonts/neuropol/neuropol.otf');
+}
+
 :root {
     /* FONT */
     --font: 'Poppins', sans-serif;
@@ -38,15 +48,36 @@ body {
 
 #content4 {
     display: flex;
+    color: #001F3F;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    background: rgb(188, 202, 216);
-    background: -moz-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
-    background: -webkit-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
-    background: linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#bccad8", endColorstr="#9fb0c1", GradientType=1);
+    background: rgb(171, 184, 197);
+    background: linear-gradient(103deg, rgba(171, 184, 197, 1) 0%, rgba(105, 118, 133, 1) 64%);
+    flex-direction: column;
+}
+
+
+/* ----------- slider text ------------ */
+
+#team_cont {
+    text-align: center;
+    width: 100%;
+}
+
+#team_cont h1 {
+    font-family: 'Blaster';
+    font-size: 6.5em;
+    font-weight: 100;
+    text-align: center;
+    padding: 2%;
+}
+
+#team_cont p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    padding-top: 1%;
 }
 
 
@@ -66,8 +97,6 @@ body {
 .card {
     width: 20em !important;
     height: 90% !important;
-    border-radius: 2em !important;
-    box-shadow: 0 0 2em rgba(0, 0, 0, .2) !important;
     padding: 2em 1em !important;
     display: flex !important;
     align-items: center !important;
@@ -77,15 +106,17 @@ body {
 
 .swiper-slide:not(.swiper-slide-active) {
     filter: blur(1px) !important;
+    transform: scale(0.3);
+    opacity: 0.5;
+    transition: all 0.5s ease-in-out;
 }
 
 .card__image {
-    width: 10em;
-    height: 10em;
-    border-radius: 50%;
-    border: 5px solid var(--color);
+    width: 20em;
+    height: 20em;
     padding: 3px;
-    margin-bottom: 2em;
+    filter: drop-shadow(9px 9px 19px #00000056);
+    margin-bottom: 1em;
 }
 
 .card__image img {
@@ -102,31 +133,22 @@ body {
 }
 
 .card__title {
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-family: 'Neuropol';
+    font-weight: 800;
+    padding: 8px;
     position: relative;
     top: .2em;
 }
 
 .card__name {
-    color: var(--color);
+    color: #d54113;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .card__text {
     text-align: center;
     font-size: 1.1rem;
     margin: 1em 0;
-}
-
-.card__btn {
-    background-color: var(--color);
-    color: #fff;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    border: none;
-    padding: .5em;
-    border-radius: .5em;
-    margin-top: .5em;
-    cursor: pointer;
 }
