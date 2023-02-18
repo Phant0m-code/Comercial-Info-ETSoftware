@@ -11,7 +11,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 100%;
+    width: 100%;
 }
 
 .content {
@@ -22,4 +23,13 @@ body {
 
 .content.active {
     display: block;
+}
+
+#content4 {
+    color: orange;
+    background: rgb(188, 202, 216);
+    background: -moz-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
+    background: -webkit-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
+    background: linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#bccad8", endColorstr="#9fb0c1", GradientType=1);
 }

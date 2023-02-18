@@ -18,4 +18,4 @@ function toggleContent() {
 }
 
 // Call the toggleContent function every 10 seconds
-setInterval(toggleContent, 10000);
+setInterval(toggleContent, 3000);
