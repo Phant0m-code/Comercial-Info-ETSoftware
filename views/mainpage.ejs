@@ -11,19 +11,17 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <link rel="stylesheet" href="style/scss/main.css" />
+    <link rel="stylesheet" href="style/scss/main.scss" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
 </head>
 
 <body>
 
     <div class="container">
-        <div class="content active" id="content1">
+        <div class="content " id="content1">
             <video src="video/vid.mp4" muted loop autoplay></video>
 
 
@@ -33,7 +31,78 @@
         </object></div>
         <div class="content" id="content2"> <iframe src="https://www.facebook.com/5dplan" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe></div>
         <div class="content" id="content3"><iframe src="https://www.linkedin.com/company/et-ing/?viewAsMember=true" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe></div>
-        <div class="content" id="content4">dass Team</div>
+
+
+
+
+        <div class="content active" id="content4">
+
+
+            <section class="swiper mySwiper">
+
+                <div class="swiper-wrapper">
+
+                    <div class="card swiper-slide">
+                        <div class="card__image">
+                            <img src="/images/user1.jpg" alt="card image">
+                        </div>
+
+                        <div class="card__content">
+                            <span class="card__title">Web Designer</span>
+                            <span class="card__name">Vanessa Martinez</span>
+                            <p class="card__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veritatis labore provident non tempora odio est sunt, ipsum</p>
+                            <button class="card__btn">View More</button>
+                        </div>
+                    </div>
+
+                    <div class="card swiper-slide">
+                        <div class="card__image">
+                            <img src="/images/user2.jpg" alt="card image">
+                        </div>
+
+                        <div class="card__content">
+                            <span class="card__title">Ui Designer</span>
+                            <span class="card__name">Sarah Bowen</span>
+                            <p class="card__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veritatis labore provident non tempora odio est sunt, ipsum</p>
+                            <button class="card__btn">View More</button>
+                        </div>
+                    </div>
+
+                    <div class="card swiper-slide">
+                        <div class="card__image">
+                            <img src="/images/user3.jpg" alt="card image">
+                        </div>
+
+                        <div class="card__content">
+                            <span class="card__title">Web Developer</span>
+                            <span class="card__name">David Murphy</span>
+                            <p class="card__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veritatis labore provident non tempora odio est sunt, ipsum</p>
+                            <button class="card__btn">View More</button>
+                        </div>
+                    </div>
+
+                    <div class="card swiper-slide">
+                        <div class="card__image">
+                            <img src="/images/user4.jpg" alt="card image">
+                        </div>
+
+                        <div class="card__content">
+                            <span class="card__title">Mobile Designer</span>
+                            <span class="card__name">Kelsey West</span>
+                            <p class="card__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit veritatis labore provident non tempora odio est sunt, ipsum</p>
+                            <button class="card__btn">View More</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+
+
+
+        </div>
         <div class="content" id="content5">Victron</div>
     </div>
 
@@ -43,23 +112,36 @@
 
 
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 300,
+                modifier: 1,
+                slideShadows: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
+    <!-- Initialize Swiper -->
+    <script>
+    </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/timecicle.js"></script>
+    <script src="js/tiecicle.js"></script>
 </body>
 
 </html>

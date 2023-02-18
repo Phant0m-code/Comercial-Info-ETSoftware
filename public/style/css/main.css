@@ -1,6 +1,17 @@
+/* ------------ GOOGLE FONTS ------------ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+:root {
+    /* FONT */
+    --font: 'Poppins', sans-serif;
+    /* COLORS */
+    --color: #9176FF;
+    --bg-color: #f4f4f4;
+}
+
 * {
-    padding: 0 !important;
-    margin: 0 !important;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -26,10 +37,96 @@ body {
 }
 
 #content4 {
-    color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
     background: rgb(188, 202, 216);
     background: -moz-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
     background: -webkit-linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
     background: linear-gradient(96deg, rgba(188, 202, 216, 1) 0%, rgba(159, 176, 193, 1) 81%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#bccad8", endColorstr="#9fb0c1", GradientType=1);
+}
+
+
+/* ----------- SLIDER ------------ */
+
+.swiper {
+    width: 100% !important;
+}
+
+.swiper-wrapper {
+    width: 100% !important;
+    height: 35em !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.card {
+    width: 20em !important;
+    height: 90% !important;
+    border-radius: 2em !important;
+    box-shadow: 0 0 2em rgba(0, 0, 0, .2) !important;
+    padding: 2em 1em !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    margin: 0 2em !important;
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+    filter: blur(1px) !important;
+}
+
+.card__image {
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+    border: 5px solid var(--color);
+    padding: 3px;
+    margin-bottom: 2em;
+}
+
+.card__image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card__content {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column;
+}
+
+.card__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    top: .2em;
+}
+
+.card__name {
+    color: var(--color);
+}
+
+.card__text {
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 1em 0;
+}
+
+.card__btn {
+    background-color: var(--color);
+    color: #fff;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: none;
+    padding: .5em;
+    border-radius: .5em;
+    margin-top: .5em;
+    cursor: pointer;
 }
