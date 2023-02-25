@@ -38,12 +38,14 @@ body {
 
 .content {
     opacity: 0;
+    z-index: 0;
     padding: 20px;
     background-color: #ddd;
 }
 
 .content.active {
     opacity: 1;
+    z-index: 999;
 }
 
 #content4 {
