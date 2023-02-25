@@ -37,18 +37,20 @@ body {
 }
 
 .content {
-    display: none;
+    opacity: 0;
     padding: 20px;
     background-color: #ddd;
 }
 
 .content.active {
-    display: block;
+    opacity: 1;
 }
 
 #content4 {
     display: flex;
     color: #001F3F;
+    padding-top: 8%;
+    padding-bottom: 20%;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -145,6 +147,7 @@ body {
     color: #d54113;
     margin-top: 10px;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .card__text {

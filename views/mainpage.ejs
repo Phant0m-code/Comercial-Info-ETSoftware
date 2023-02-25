@@ -21,21 +21,34 @@
 <body>
 
     <div class="container">
-        <div class="content " id="content1">
-            <video src="video/vid.mp4" muted loop autoplay></video>
+        <div class="content active
+         " id="content1">
+            <video style="    position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;" src="video/vid.mp4" muted loop autoplay></video>
 
 
-            <object style="position: absolute; height: 100%; width: 100% ;top: 0;
-          left: 0;" type="image/svg+xml" data="img/logoswel.svg">
+            <object style="    position: absolute;
+            height: 100%;
+            transform: scale(1.06);
+            width: 100%;
+            background-size: 100% auto;
+            top: 0;
+            left: 0;" type="image/svg+xml" data="img/logoswel.svg">
           Your browser does not support SVG
         </object></div>
-        <div class="content" id="content2"> <iframe src="https://www.facebook.com/5dplan" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe></div>
-        <div class="content" id="content3"><iframe src="https://www.linkedin.com/company/et-ing/?viewAsMember=true" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe></div>
+        <div class="content" id="content2"><iframe src="https://www.facebook.com/5dplan" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe> </div>
+        <div class="content" id="content3">
+            <iframe src="https://www.linkedin.com/company/et-ing/?viewAsMember=true" height="100%" width="100%" style="position: absolute; top: 0; left: 0;"></iframe>
+
+        </div>
 
 
 
 
-        <div class="content active" id="content4">
+        <div class="content" id="content4">
             <div id="team_cont">
                 <h1>Das Team</h1>
                 <p>Wir bieten Projekt-Knowhow mit echter Handschlagqualität –<br> mit erfahrenen Mitarbeitern aus der Elektrotechnik und der IT</p>
@@ -171,7 +184,7 @@
             <script>
                 var swiper = new Swiper(".mySwiper", {
                     autoplay: {
-                        delay: 9000, // delay between slides in milliseconds
+                        delay: 2000, // delay between slides in milliseconds
                         disableOnInteraction: false, // allows user interaction to interrupt autoplay
                     },
                     loop: true, // enables infinite loop
@@ -203,8 +216,6 @@
             </script>
 
 
-
-
         </div>
         <div class="content" id="content5">Victron</div>
     </div>
@@ -221,7 +232,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/tiecicle.js"></script>
+    <script src="js/timecicle.js"></script>
 </body>
 
 </html>
