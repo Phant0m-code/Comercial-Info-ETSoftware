@@ -9,10 +9,6 @@ router.get('/', (req, res) => {
 
 });
 
-router.get('/admin', (req, res) => {
-    res.send('Something');
-});
-
 router.post('/add-news', (req, res) => {
     const { title, content } = req.body;
     news.push({ title, content });
