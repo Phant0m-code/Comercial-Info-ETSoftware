@@ -4,10 +4,6 @@ const router = express.Router();
 
 
 
-router.get('/', (req, res) => {
-    res.render('mainpage');
-
-});
 
 router.post('/add-news', (req, res) => {
     const { title, content } = req.body;

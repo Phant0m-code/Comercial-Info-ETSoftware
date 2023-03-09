@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>Add a Div</h2>
+    <form action="/divs" method="POST">
+        <label>Title:</label>
+        <input type="text" name="title"><br>
+        <label>Description:</label>
+        <textarea name="description"></textarea><br>
+        <label>Image URL:</label>
+        <input type="text" name="imageUrl"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Current Divs</h2>
+    <ul>
+        <% divs.forEach(function(div) { %>
+            <li>
+                <h3>
+                    <%= div.title %>
+                </h3>
+                <p>
+                    <%= div.description %>
+                </p>
+                <img src="<%= div.imageUrl %>">
+                <form action="/divs/<%= div._id %>" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Delete">
+                </form>
+            </li>
+            <% }); %>
+    </ul>
+</body>
+
+</html>
