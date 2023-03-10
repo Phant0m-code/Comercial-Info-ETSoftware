@@ -6,9 +6,13 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const flash = require('connect-flash');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const bcrypt = require('bcrypt');
+
+const { MongoClient } = require('mongodb');
+const mongoClient = new MongoClient('mongodb+srv://admin:admin@cluster0.bxccpdz.mongodb.net/?retryWrites=true&w=majority');
+mongoClient.connect();
+const db = mongoClient.db('et-news');
+const newsCollection = db.collection('news');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -93,45 +97,12 @@ function isAdmin(req, res, next) {
 }
 
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost/myapp', { useNewUrlParser: true });
-
-// Define schema for divs
-const divSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    imageUrl: String
-});
-
-// Define model for divs
-const Div = mongoose.model('Div', divSchema);
-
-
-// Handle POST request to add a div
-app.post('/divs', (req, res) => {
-    const { title, description, imageUrl } = req.body;
-    const div = new Div({ title, description, imageUrl });
-    div.save()
-        .then(() => res.redirect('/admin'))
-        .catch(err => console.error(err));
-});
-
-// Handle DELETE request to delete a div
-app.delete('/divs/:id', (req, res) => {
-    const { id } = req.params;
-    Div.findByIdAndDelete(id)
-        .then(() => res.sendStatus(204))
-        .catch(err => console.error(err));
-});
-
 
 
 
 // Handle GET request to display divs
 app.get('/', (req, res) => {
-    Div.find()
-        .then(divs => res.render('mainpage', { divs }))
-        .catch(err => console.error(err));
+    res.render('mainpage')
 });
 
 
