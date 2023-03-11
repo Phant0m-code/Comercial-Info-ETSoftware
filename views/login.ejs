@@ -1,28 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <link rel="stylesheet" href="style/scss/main.css" />
+    <link rel="stylesheet" href="style/scss/main.scss" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
 </head>
 
 <body>
-    <% if (message) { %>
-        <p>
-            <%= message %>
-        </p>
-        <% } %>
-            <form method="POST" action="/login">
-                <div>
-                    <label>Username:</label>
-                    <input type="text" name="username">
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" name="password">
-                </div>
-                <button type="submit">Login</button>
-            </form>
+
+
+    <div class="container">
+        <div class="Udo-img"></div>
+        <div class="log-form">
+            <div id="particles-js"></div>
+
+            <script src="particles.js"></script>
+
+
+            <div id="logcont">
+                <h1>Admin<span>Dashboard</span></h1>
+
+                <% if (message) { %>
+                    <p id="msg">
+                        <%= message %>
+                    </p>
+                    <% } else {%>
+                        <p style="opacity: 0;" id="msg">
+
+                        </p>
+                        <% } %>
+                            <form method="POST" action="/login">
+
+                                <div>
+
+                                    <input placeholder="Username" type="text" name="username">
+                                </div>
+                                <div>
+
+                                    <input placeholder="Password" type="password" name="password">
+                                </div><br><br>
+                                <button type="submit">Login</button>
+                            </form>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script>
+    </script>
 </body>
 
 </html>

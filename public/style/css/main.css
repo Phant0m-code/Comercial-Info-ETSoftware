@@ -11,6 +11,11 @@
     src: url('/fonts/neuropol/neuropol.otf');
 }
 
+@font-face {
+    font-family: 'Monserrat';
+    src: url('/fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
 :root {
     /* FONT */
     --font: 'Poppins', sans-serif;
@@ -156,4 +161,158 @@ body {
     text-align: center;
     font-size: 1.1rem;
     margin: 1em 0;
+}
+
+.news-item {
+    background-color: #001F3F;
+    height: auto;
+    width: auto;
+    color: white;
+    padding: 30px;
+    margin: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "Udo-img log-form log-form";
+}
+
+.Udo-img {
+    grid-area: Udo-img;
+    background-image: url(/img/udologin.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: orange;
+    height: 100vh;
+}
+
+.log-form {
+    grid-area: log-form;
+    height: 100%;
+    background: rgb(190, 206, 222);
+    background: linear-gradient(103deg, rgba(190, 206, 222, 1) 0%, rgba(66, 118, 166, 1) 42%, rgba(15, 82, 143, 1) 77%, rgba(65, 117, 166, 1) 100%);
+}
+
+
+/* iPad Landscape */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas: "Udo-img log-form";
+    }
+}
+
+
+/* iPad Portrait */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas: "log-form";
+    }
+    .log-form {
+        grid-area: log-form;
+        background-color: #001F3F;
+        height: 100vh;
+    }
+}
+
+#logcont {
+    color: white;
+    padding: 12px;
+    filter: drop-shadow(5px 5px 10px #000000a8);
+    border-radius: 12px;
+    padding-bottom: 30px;
+    position: relative;
+    background: rgb(30, 46, 67);
+    background: linear-gradient(117deg, rgba(30, 46, 67, 1) 0%, rgba(42, 68, 101, 1) 100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: auto;
+    text-align: center;
+}
+
+#logcont h1 {
+    font-weight: 100;
+    font-family: Monserrat;
+    margin: 8px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+#logcont span {
+    font-weight: 200;
+    font-family: Monserrat;
+    margin: 8px;
+    color: #d54113;
+}
+
+#logcont input {
+    background: none;
+    margin: 10px;
+    width: 200px;
+    font-size: 14px;
+    padding: 12px;
+    color: white;
+    background-color: none;
+    border: none;
+    transition: all .25s ease-in-out;
+    border-bottom: 2px solid red;
+}
+
+#logcont input:hover {
+    background: none;
+    margin: 10px;
+    width: 190px;
+    font-size: 14px;
+    padding: 12px;
+    color: white;
+    background-color: none;
+    border: none;
+    border-bottom: 2px solid rgb(124, 12, 12);
+}
+
+#logcont input::content {
+    background: none;
+    background-color: none;
+    border: none;
+    border-bottom: 2px solid red;
+}
+
+#logcont button {
+    padding: 10px 39px;
+    border: none;
+    background: rgb(213, 65, 19);
+    background: linear-gradient(117deg, rgba(213, 65, 19, 1) 0%, rgba(255, 81, 27, 1) 43%, rgba(170, 48, 11, 1) 100%);
+    border-radius: 12px;
+    font-family: 'Monserrat';
+    color: white;
+    transition: all 0.23s ease-in-out;
+}
+
+#logcont button:hover {
+    cursor: pointer;
+    transform: scale(0.97);
+}
+
+#msg {
+    color: white;
+    font-family: 'Monserrat';
 }

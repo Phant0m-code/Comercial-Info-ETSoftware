@@ -3,14 +3,79 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Administration</title>
+    <link rel="stylesheet" type="text/css" href="style/css/main.css" />
 </head>
 
 <body>
-    <h1>Admin Dashboard</h1>
 
-    <h2>Add a Div</h2>
+    <!-- admin.ejs -->
+    <h1>Admin Page</h1>
 
+    <form id="add-form" action="/api/news" method="POST">
+        <label>Title:</label>
+        <input type="text" name="title" required>
+        <label>Content:</label>
+        <textarea name="content" required></textarea>
+        <button type="submit">Add News Item</button>
+    </form>
+
+    <div class="news">
+        <% for (const newsItem of newsItems) { %>
+            <div class="news-item" data-id="<%= newsItem._id %>">
+                <h2>
+                    <%= newsItem.title %>
+                </h2>
+                <p>
+                    <%= newsItem.content %>
+                </p>
+                <form class="delete-form" action="/api/news/${newsItem._id}" method="DELETE">
+                    <input type="hidden" name="id" value="<%= newsItem._id %>">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+            <% } %>
+    </div>
+
+
+
+    <script>
+        // Listen for form submission to delete a news item
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach((form) => {
+            form.addEventListener('submit', async(event) => {
+                event.preventDefault();
+                const formData = new FormData(form);
+                console.log('testtt');
+                const response = await fetch('/api/news/' + formData.get('id'), {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    const newsItem = await response.json();
+                    const newsDiv = document.querySelector(`[data-id="${newsItem._id}"]`);
+                    newsDiv.parentNode.removeChild(newsDiv);
+                } else {
+                    console.error(response.statusText);
+                }
+            });
+        });
+
+        // Helper function to create a news item div
+        function createNewsDiv(newsItem) {
+            const newsDiv = document.createElement('div');
+            newsDiv.classList.add('news-item');
+            newsDiv.dataset.id = newsItem._id;
+            newsDiv.innerHTML = `
+    <h2 style="color:orange;">${newsItem.title}</h2>
+    <p>${newsItem.content}</p>
+    <form class="delete-form">
+      <input type="hidden" name="id" value="${newsItem._id}">
+      <button type="submit">Delete</button>
+    </form>
+  `;
+            return newsDiv;
+        }
+    </script>
 </body>
 
 </html>

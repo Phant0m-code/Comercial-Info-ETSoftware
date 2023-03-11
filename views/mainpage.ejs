@@ -19,6 +19,22 @@
 </head>
 
 <body>
+    <div style="z-index: 9999999999999999999999999999999; position: relative;">
+        <h1>newssss</h1>
+        <div class="news">
+            <!-- News items will be added here -->
+            <% newsItems.forEach(function(newsItem) { %>
+                <div class="news-item">
+                    <h2>
+                        <%= newsItem.title %>
+                    </h2>
+                    <p>
+                        <%= newsItem.content %>
+                    </p>
+                </div>
+                <% }); %>
+        </div>
+    </div>
 
     <div class="container">
         <div class="content active
@@ -76,13 +92,24 @@
                         </div>
 
                         <div class="card__content">
-                            <span class="card__title">Miriam Jester</span>
+                            <span class="card__title">Mirjam Jester</span>
                             <span class="card__name">Administration, Buchhaltung, Marketing</span>
                             <p class="card__text"></p>
 
                         </div>
                     </div>
+                    <div class="card swiper-slide">
+                        <div class="card__image">
+                            <img src="/img/team/sereinig_carina.png" alt="card image">
+                        </div>
 
+                        <div class="card__content">
+                            <span class="card__title">Sereinig Carina</span>
+                            <span class="card__name">Teamassistenz</span>
+                            <p class="card__text"></p>
+
+                        </div>
+                    </div>
                     <div class="card swiper-slide">
                         <div class="card__image">
                             <img src="/img/team/lukas_t.png" alt="card image">
@@ -233,6 +260,69 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/timecicle.js"></script>
+    <script>
+        // Listen for click event on "Admin Page" link
+        const adminLink = document.querySelector('a[href="/admin"]');
+        adminLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.location.href = '/admin';
+        });
+
+        // Listen for form submission to add a new news item
+        const addForm = document.querySelector('#add-form');
+        addForm.addEventListener('submit', async(event) => {
+            event.preventDefault();
+            const formData = new FormData(addForm);
+            const response = await fetch('/api/news', {
+                method: 'POST',
+                body: formData,
+            });
+            if (response.ok) {
+                const newsItem = await response.json();
+                const newsDiv = createNewsDiv(newsItem);
+                const newsContainer = document.querySelector('.news');
+                newsContainer.appendChild(newsDiv);
+                addForm.reset();
+            } else {
+                console.error(response.statusText);
+            }
+        });
+
+        // Listen for form submission to delete a news item
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach((form) => {
+            form.addEventListener('submit', async(event) => {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const response = await fetch('/api/news/' + formData.get('id'), {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    const newsItem = await response.json();
+                    const newsDiv = document.querySelector(`[data-id="${newsItem._id}"]`);
+                    newsDiv.parentNode.removeChild(newsDiv);
+                } else {
+                    console.error(response.statusText);
+                }
+            });
+        });
+
+        // Helper function to create a news item div
+        function createNewsDiv(newsItem) {
+            const newsDiv = document.createElement('div');
+            newsDiv.classList.add('news-item');
+            newsDiv.dataset.id = newsItem._id;
+            newsDiv.innerHTML = `
+    <h2>${newsItem.title}</h2>
+    <p>${newsItem.content}</p>
+    <form class="delete-form">
+      <input type="hidden" name="id" value="${newsItem._id}">
+      <button type="submit">Delete</button>
+    </form>
+  `;
+            return newsDiv;
+        }
+    </script>
 </body>
 
 </html>

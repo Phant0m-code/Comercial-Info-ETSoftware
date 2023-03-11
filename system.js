@@ -9,10 +9,12 @@ const flash = require('connect-flash');
 const dotenv = require('dotenv');
 
 const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const mongoClient = new MongoClient('mongodb+srv://admin:admin@cluster0.bxccpdz.mongodb.net/?retryWrites=true&w=majority');
 mongoClient.connect();
-const db = mongoClient.db('et-news');
-const newsCollection = db.collection('news');
+const db = mongoClient.db('NewsDB');
+const newsCollection = db.collection('newsC');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -21,6 +23,15 @@ console.log(__dirname);
 const someRouter = require('./routes/pages');
 console.log('done')
 app.use(someRouter);
+
+
+
+
+
+
+
+
+
 
 
 // Set up session middleware
@@ -47,7 +58,7 @@ passport.use(new LocalStrategy((username, password, done) => {
     if (username === 'admin' && password === 'admin') {
         return done(null, { id: 1, username: 'admin' });
     } else {
-        return done(null, false, { message: 'Invalid username or password' });
+        return done(null, false, { message: '!!! Invalid username or password !!!' });
     }
 }));
 
@@ -73,8 +84,14 @@ app.post('/login', passport.authenticate('local', {
 }));
 
 // Define a protected route for the admin page
-app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
-    res.render('admin');
+app.get('/admin', isAuthenticated, isAdmin, async(req, res) => {
+    try {
+        const newsItems = await newsCollection.find().toArray();
+        res.render('admin', { newsItems });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving news items');
+    }
 });
 
 // Middleware function to check if a user is authenticated
@@ -97,18 +114,51 @@ function isAdmin(req, res, next) {
 }
 
 
-
-
-
-// Handle GET request to display divs
-app.get('/', (req, res) => {
-    res.render('mainpage')
+// Get all news items
+app.get('/', async(req, res) => {
+    try {
+        const newsItems = await newsCollection.find().toArray();
+        res.render('mainpage', { newsItems });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving news items');
+    }
 });
 
 
 
+// Add news item
+app.post('/api/news', (req, res) => {
+    const newsItem = {
+        title: req.body.title,
+        content: req.body.content,
+    };
+    newsCollection.insertOne(newsItem, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error adding news item');
+        } else {
+            const insertedNewsItem = result.ops[0];
+            res.json(insertedNewsItem);
+        }
+    });
+});
 
-
+// Delete news item
+app.delete('/api/news/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    const idtokill = new ObjectId(id);
+    newsCollection.deleteOne({ _id: idtokill }, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error deleting news item');
+        } else {
+            const deletedNewsItem = { _id: id };
+            res.json(deletedNewsItem);
+        }
+    });
+});
 
 
 
