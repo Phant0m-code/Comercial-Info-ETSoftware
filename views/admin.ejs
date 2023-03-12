@@ -4,44 +4,98 @@
 <head>
     <meta charset="utf-8">
     <title>Administration</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/css/main.css" />
 </head>
 
-<body>
+<body id="adminbody">
 
-    <!-- admin.ejs -->
-    <h1>Admin Page</h1>
 
-    <form id="add-form" action="/api/news" method="POST">
-        <label>Title:</label>
-        <input type="text" name="title" required>
-        <label>Content:</label>
-        <textarea name="content" required></textarea>
-        <button type="submit">Add News Item</button>
-    </form>
-
-    <div class="news">
-        <% for (const newsItem of newsItems) { %>
-            <div class="news-item" data-id="<%= newsItem._id %>">
-                <h2>
-                    <%= newsItem.title %>
-                </h2>
-                <p>
-                    <%= newsItem.content %>
-                </p>
-                <form class="delete-form" action="/api/news/${newsItem._id}" method="DELETE">
-                    <input type="hidden" name="id" value="<%= newsItem._id %>">
-                    <button type="submit">Delete</button>
-                </form>
+    <nav id="scanfcode" class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" id="toogle-button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+             <span class="glyphicon glyphicon-menu-hamburger"></span>                     
+            </button>
+                <a id="logo" class="navbar-brand" href="#"><span>ET</span>-Admin</a>
             </div>
-            <% } %>
+            <div class="collapse navbar-collapse" id="myNavbar">
+
+                <ul id="link" class="nav navbar-nav navbar-right">
+                    <li class="dropdown" id="first-link">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Weiteres <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://www.et-ing.at/">Homepage</a></li>
+                            <li><a href="https://vrm.victronenergy.com/login">VRM Portal</a></li>
+
+                        </ul>
+                    </li>
+                    <li><img class="icons" src="./img/icons/logout.png" height="20px" /></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- admin.ejs -->
+    <div style="margin: 50px;
+    position: relative;
+    top: 38px;">
+        <h1 style="font-family: Neuropol; font-size: 57px;">Administrator</h1>
+        <p style="font-family: Monserrat; font-size: 20px;">Willkommen zurück, Udo</p>
+        <br><br>
+
+
+        <form id="add-form" action="/api/news" method="POST">
+            <label>Title:</label>
+            <input type="text" name="title" required>
+            <label>Content:</label>
+            <textarea name="content" required></textarea>
+            <button id="addfeed" type="submit">Add News Item</button>
+        </form>
+        <span style="font-family: Monserrat;     font-size: 26px;">Deine Aktiven News Feeds</span>
+
+        <div class="container-flex">
+            <div class="news">
+                <% for (const newsItem of newsItems) { %>
+                    <div class="news-item" data-id="<%= newsItem._id %>">
+                        <p style="font-size:10px">
+                            Container-ID:<br>
+                            <%= newsItem._id %>
+                        </p>
+                        <h2>
+                            <%= newsItem.title %>
+                        </h2>
+                        <p>
+                            <%= newsItem.content %>
+                        </p>
+                        <form class="delete-form" action="/api/news/${newsItem._id}" method="DELETE">
+                            <input type="hidden" name="id" value="<%= newsItem._id %>">
+                            <button class="noselect" type="submit"><span class='text'>Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></span></button>
+                        </form>
+                    </div>
+                    <% } %>
+            </div>
+
+        </div>
     </div>
 
-
+    <!--Info Box-->
+    <label>
+    <input type="checkbox" class="alertCheckbox" autocomplete="off" />
+    <div class="alert error">
+      <span class="alertClose">X</span>
+      <span class="alertText">Bitte lade die Seite nach Änderungen neu ! 
+      <br class="clear"/></span>
+    </div>
+  </label>
 
     <script>
         // Listen for form submission to delete a news item
         const deleteForms = document.querySelectorAll('.delete-form');
+
         deleteForms.forEach((form) => {
             form.addEventListener('submit', async(event) => {
                 event.preventDefault();
@@ -51,6 +105,7 @@
                     method: 'DELETE',
                 });
                 if (response.ok) {
+                    console.log('kill')
                     const newsItem = await response.json();
                     const newsDiv = document.querySelector(`[data-id="${newsItem._id}"]`);
                     newsDiv.parentNode.removeChild(newsDiv);
@@ -76,6 +131,8 @@
             return newsDiv;
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const flash = require('connect-flash');
 const dotenv = require('dotenv');
+const puppeteer = require('puppeteer');
 
 const { MongoClient } = require('mongodb');
 const { ObjectId } = require('mongodb');
@@ -28,11 +29,15 @@ app.use(someRouter);
 
 
 
+// Add the middleware function to handle errors
+app.use(errorHandler);
 
 
 
-
-
+function errorHandler(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).sendFile('/login');
+}
 
 // Set up session middleware
 app.use(session({
@@ -126,7 +131,6 @@ app.get('/', async(req, res) => {
 });
 
 
-
 // Add news item
 app.post('/api/news', (req, res) => {
     const newsItem = {
@@ -142,7 +146,26 @@ app.post('/api/news', (req, res) => {
             res.json(insertedNewsItem);
         }
     });
+    const id = req.params.id;
+    // Ein Dokument abrufen
+    collection.findOne({ _id: ObjectId(id) }, function(err, doc) {
+
+        // Zeitstempel des "_id"-Felds des Dokuments abrufen
+        const timestamp = doc._id.getTimestamp();
+
+        // Dauer seit der Erstellung des Dokuments berechnen
+        const duration = new Date() - timestamp;
+
+        // Dauer in Tagen ausgeben
+        console.log('Dokument existiert seit ' + (duration / (1000 * 60 * 60 * 24)) + ' Tagen.');
+
+    });
+
+
+
+
 });
+
 
 // Delete news item
 app.delete('/api/news/:id', (req, res) => {
@@ -154,10 +177,15 @@ app.delete('/api/news/:id', (req, res) => {
             console.error(err);
             res.status(500).send('Error deleting news item');
         } else {
+            console.log('item killed')
             const deletedNewsItem = { _id: id };
             res.json(deletedNewsItem);
+
+
+
         }
     });
+
 });
 
 

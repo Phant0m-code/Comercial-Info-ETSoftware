@@ -164,12 +164,26 @@ body {
 }
 
 .news-item {
-    background-color: #001F3F;
-    height: auto;
-    width: auto;
+    background-color: #6a8bac;
+    border-radius: 20px;
     color: white;
     padding: 30px;
-    margin: 20px;
+    width: 18%;
+    height: auto;
+    /* padding-bottom: 18%; */
+    margin-bottom: 2%;
+}
+
+#add-form {
+    margin: 40px;
+}
+
+.news {
+    display: flex;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .container {
@@ -315,4 +329,230 @@ body {
 #msg {
     color: white;
     font-family: 'Monserrat';
+}
+
+
+/*Admin page*/
+
+
+/* navigation bar */
+
+#scanfcode {
+    border-radius: 0px;
+    background: #7990a8;
+    filter: drop-shadow(9px 9px 19px #00000056);
+    padding: 6px;
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+
+/* logo or main heading */
+
+#logo {
+    font-family: Blaster;
+    font-style: italic;
+    color: #00004d;
+    letter-spacing: 1px;
+}
+
+#logo span {
+    color: #d54113;
+}
+
+
+/* navigation links*/
+
+#link a {
+    color: #00004d;
+    margin: 0 20px 0 10px;
+    letter-spacing: 1.5px;
+}
+
+
+/* navigation link with right border */
+
+#first-link {
+    padding-right: 6px;
+    border-right: solid 1px #ccc;
+}
+
+
+/* sign up link button and toggle button */
+
+#button-link,
+#toogle-button {
+    color: #f2f2f2;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, .2);
+    border-radius: 12px;
+    background-color: #d54113;
+    line-height: 17px;
+}
+
+.icons {
+    top: 12px;
+    left: -2px;
+    margin-left: 30px;
+    position: relative;
+}
+
+#adminbody {
+    height: 100%;
+    background-position: fixed;
+    background: rgb(197, 211, 225);
+    background: linear-gradient(54deg, rgba(197, 211, 225, 1) 82%, rgba(172, 188, 205, 1) 82%);
+}
+
+.noselect {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: red;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    background: #e62222;
+}
+
+button,
+button span {
+    transition: 200ms;
+}
+
+button .text {
+    transform: translateX(35px);
+    color: white;
+    font-weight: bold;
+}
+
+button .icon {
+    position: absolute;
+    border-left: 1px solid #c41b1b;
+    transform: translateX(110px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button svg {
+    width: 15px;
+    fill: #eee;
+}
+
+button:hover {
+    background: #ff3636;
+}
+
+button:hover .text {
+    color: transparent;
+}
+
+button:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+}
+
+button:focus {
+    outline: none;
+}
+
+
+/* 5 */
+
+#addfeed {
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    transition: all 0.23s ease-in-out;
+    padding: 0;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #d54113;
+}
+
+#addfeed:hover {
+    transform: scale(0.98);
+}
+
+
+/*Info box*/
+
+.alert {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    line-height: 1.8;
+    border-radius: 5px;
+    cursor: hand;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 400;
+}
+
+.alertCheckbox {
+    display: none;
+}
+
+ :checked+.alert {
+    display: none;
+}
+
+.alertText {
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+}
+
+.alertClose {
+    float: right;
+    padding-top: 5px;
+    font-size: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.info {
+    background-color: #EEE;
+    border: 1px solid #DDD;
+    color: #999;
+}
+
+.success {
+    background-color: #EFE;
+    border: 1px solid #DED;
+    color: #9A9;
+}
+
+.notice {
+    background-color: #EFF;
+    border: 1px solid #DEE;
+    color: #9AA;
+}
+
+.warning {
+    background-color: #FDF7DF;
+    border: 1px solid #FEEC6F;
+    color: #C9971C;
+}
+
+.error {
+    background-color: #FEE;
+    border: 1px solid #EDD;
+    color: #A66;
 }
