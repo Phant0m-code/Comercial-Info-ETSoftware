@@ -135,6 +135,7 @@ app.get('/', async(req, res) => {
 app.post('/api/news', (req, res) => {
     const newsItem = {
         title: req.body.title,
+        hashtag: req.body.hashtag,
         content: req.body.content,
     };
     newsCollection.insertOne(newsItem, (err, result) => {
@@ -146,23 +147,6 @@ app.post('/api/news', (req, res) => {
             res.json(insertedNewsItem);
         }
     });
-    const id = req.params.id;
-    // Ein Dokument abrufen
-    collection.findOne({ _id: ObjectId(id) }, function(err, doc) {
-
-        // Zeitstempel des "_id"-Felds des Dokuments abrufen
-        const timestamp = doc._id.getTimestamp();
-
-        // Dauer seit der Erstellung des Dokuments berechnen
-        const duration = new Date() - timestamp;
-
-        // Dauer in Tagen ausgeben
-        console.log('Dokument existiert seit ' + (duration / (1000 * 60 * 60 * 24)) + ' Tagen.');
-
-    });
-
-
-
 
 });
 
