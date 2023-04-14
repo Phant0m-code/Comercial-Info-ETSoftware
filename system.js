@@ -1,13 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const flash = require('connect-flash');
 const dotenv = require('dotenv');
 const puppeteer = require('puppeteer');
+const multer = require('multer');
+const mongoose = require('mongoose');
 
 const { MongoClient } = require('mongodb');
 const { ObjectId } = require('mongodb');
@@ -21,12 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 console.log(__dirname);
+
 const someRouter = require('./routes/pages');
 console.log('done')
 app.use(someRouter);
-
-
-
 
 
 // Add the middleware function to handle errors
@@ -88,6 +89,118 @@ app.post('/login', passport.authenticate('local', {
     failureFlash: true
 }));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// configure Multer to handle picture uploads
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '/img/uploads/') // specify the directory to store uploaded pictures
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname) // generate a unique filename for each uploaded picture
+    }
+});
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // limit the picture file size to 5 MB
+    fileFilter: function(req, file, cb) {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; // specify the allowed picture file types
+        if (!allowedTypes.includes(file.mimetype)) {
+            cb(new Error('Invalid file type. Only JPEG, PNG and GIF files are allowed.'), false);
+        } else {
+            cb(null, true);
+        }
+    }
+});
+
+// add a new API endpoint for uploading a picture
+app.post('/api/picture', upload.single('picture'), (req, res) => {
+    if (req.file) {
+        const pictureUrl = req.protocol + '://' + req.get('host') + 'img/uploads/' + req.file.filename; // generate the picture URL
+        res.json({ pictureUrl: pictureUrl }); // return the picture URL to the client
+    } else {
+        res.status(400).json({ error: 'No picture uploaded.' });
+    }
+});
+
+// add a new API endpoint for adding a news item with a picture
+app.post('/api/news', upload.single('picture'), (req, res) => {
+    if (req.file) {
+        const newsItems = {
+            title: req.body.title,
+            hashtag: req.body.hashtag,
+            content: req.body.content,
+            picture: req.protocol + '://' + req.get('host') + 'img/uploads/' + req.file.filename // save the picture URL in the news item
+        };
+        newsCollection.insertOne(newsItems, (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error adding news item');
+            } else {
+                const insertedNewsItem = result.ops[0];
+                res.json(insertedNewsItem);
+            }
+        });
+    } else {
+        const newsItems = {
+            title: req.body.title,
+            hashtag: req.body.hashtag,
+            content: req.body.content,
+        };
+        newsCollection.insertOne(newsItems, (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error adding news item');
+            } else {
+                const insertedNewsItem = result.ops[0];
+                res.json(insertedNewsItem);
+            }
+        });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Define a protected route for the admin page
 app.get('/admin', isAuthenticated, isAdmin, async(req, res) => {
     try {
@@ -131,25 +244,6 @@ app.get('/', async(req, res) => {
 });
 
 
-// Add news item
-app.post('/api/news', (req, res) => {
-    const newsItem = {
-        title: req.body.title,
-        hashtag: req.body.hashtag,
-        content: req.body.content,
-    };
-    newsCollection.insertOne(newsItem, (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error adding news item');
-        } else {
-            const insertedNewsItem = result.ops[0];
-            res.json(insertedNewsItem);
-        }
-    });
-
-});
-
 
 // Delete news item
 app.delete('/api/news/:id', (req, res) => {
@@ -164,9 +258,6 @@ app.delete('/api/news/:id', (req, res) => {
             console.log('item killed')
             const deletedNewsItem = { _id: id };
             res.json(deletedNewsItem);
-
-
-
         }
     });
 

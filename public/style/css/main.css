@@ -24,6 +24,33 @@
     --bg-color: #f4f4f4;
 }
 
+.news-item:hover #imgcontainer {
+    top: -8em;
+    width: 93%;
+}
+
+#imgcontainer {
+    transition: all .24s ease-in-out;
+    background: orange;
+    position: relative;
+    top: -7em;
+    width: 95%;
+    margin-bottom: -83px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 53px;
+}
+
+.upimgstyle {
+    height: 100%;
+    width: 100%;
+    border-radius: 14px;
+}
+
+#CID {
+    text-align: right;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -179,9 +206,7 @@ body {
 }
 
 .news-item:hover {
-    color: #d54113;
-    color: #d54113;
-    box-shadow: 0px -1px 20px 20px rgb(121 144 168);
+    box-shadow: 0px -1px 20px 20px rgba(121, 144, 168, 0.212);
 }
 
 .h2cont {

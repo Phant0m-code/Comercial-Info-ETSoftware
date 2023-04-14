@@ -50,13 +50,16 @@
         <br><br>
 
 
-        <form id="add-form" action="/api/news" method="POST">
+        <form id="add-form" action="/api/news" method="POST" enctype="multipart/form-data">
 
             <input type="text" name="title" placeholder="Titel" required>
             <br>
             <input type="text" name="hashtag" placeholder="Hashtag" required>
             <br>
             <textarea placeholder="Deine News" name="content" required></textarea><br>
+
+            <label for="picture">Picture:</label>
+            <input type="file" id="picture" name="picture" accept="image/jpeg, image/png, image/gif"><br>
             <button id="addfeed" type="submit">Add News Item</button>
         </form>
         <span style="font-family: Monserrat;     font-size: 26px;">Deine Aktiven News Feeds</span>
@@ -65,10 +68,16 @@
             <div class="news">
                 <% for (const newsItem of newsItems) { %>
                     <div class="news-item" data-id="<%= newsItem._id %>">
-                        <p id="CID" style="font-size:10px">
-                            Container-ID:<br>
-                            <%= newsItem._id %>
-                        </p>
+                        <div id="imgcontainer">
+
+                            <% if (newsItem.picture) { %>
+                                <% console.log(newsItem.picture); %>
+                                    <% console.log(newsItem.picture); %>
+                                        <img class="upimgstyle" src="<%= newsItem.picture %>" alt="<%= newsItem.title %>">
+
+                                        <% } %>
+
+                        </div>
                         <h2 class="h2cont">
                             <%= newsItem.title %>
                         </h2>
@@ -82,6 +91,11 @@
                             <input type="hidden" name="id" value="<%= newsItem._id %>">
                             <button class="noselect" type="submit"><span class='text'>Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></span></button>
                         </form>
+
+                        <p id="CID" style="font-size:10px">
+                            Container-ID:<br>
+                            <%= newsItem._id %>
+                        </p>
                     </div>
                     <% } %>
             </div>
@@ -107,17 +121,30 @@
             form.addEventListener('submit', async(event) => {
                 event.preventDefault();
                 const formData = new FormData(form);
+                const newsId = formData.get('id');
 
-                const response = await fetch('/api/news/' + formData.get('id'), {
-                    method: 'DELETE',
-                });
-                if (response.ok) {
-                    console.log('kill')
-                    const newsItem = await response.json();
-                    const newsDiv = document.querySelector(`[data-id="${newsItem._id}"]`);
+                try {
+                    // Delete the news item from the server
+                    const response = await fetch('/api/news/' + newsId, {
+                        method: 'DELETE',
+                    });
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+
+                    // Delete the image file from the server
+                    const imageResponse = await fetch('/api/news/' + newsId + '/image', {
+                        method: 'DELETE',
+                    });
+                    if (!imageResponse.ok) {
+                        throw new Error(imageResponse.statusText);
+                    }
+
+                    // Remove the news item from the DOM
+                    const newsDiv = document.querySelector(`[data-id="${newsId}"]`);
                     newsDiv.parentNode.removeChild(newsDiv);
-                } else {
-                    console.error(response.statusText);
+                } catch (err) {
+                    console.error(err);
                 }
             });
         });
