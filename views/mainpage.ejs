@@ -226,12 +226,19 @@
 
         <div class="content " id="content5">
 
-            <div style="position: absolute;">
+            <div style="position: absolute; margin-top: 100px;">
 
                 <div style="font-family:Monserrat;" class="newsmain">
                     <!-- News items will be added here -->
                     <% newsItems.forEach(function(newsItem) { %>
                         <div class="news-item-main">
+                            <div id="imgcontainer">
+                                <% if (newsItem.picture) { %>
+                                    <img src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; 
+        object-fit: cover;
+        border-radius: 21px;" alt="News Image">
+                                    <% } %>
+                            </div>
                             <h2 class="h2cont">
                                 <%= newsItem.title %>
                             </h2>

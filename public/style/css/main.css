@@ -31,9 +31,9 @@
 
 #imgcontainer {
     transition: all .24s ease-in-out;
-    background: orange;
     position: relative;
     top: -7em;
+    object-fit: cover;
     width: 95%;
     margin-bottom: -83px;
     left: 50%;
@@ -45,6 +45,16 @@
     height: 100%;
     width: 100%;
     border-radius: 14px;
+}
+
+.imgcontainer img.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    z-index: 9999;
 }
 
 #CID {
@@ -529,44 +539,6 @@ body {
     color: #d54113;
 }
 
-#add-form input {
-    line-height: normal;
-    background: none;
-    color: #333333;
-    border: none;
-    border-bottom: 3px solid #d54113;
-    margin-bottom: 30px;
-    padding: 8px;
-    transition: all 0.23s ease-in-out;
-}
-
-#add-form input:hover {
-    border-bottom: 3px solid #333333;
-}
-
-#add-form input:active {
-    background-color: #d54113;
-}
-
-#add-form textarea {
-    line-height: normal;
-    background: none;
-    color: #333333;
-    border: none;
-    border-bottom: 3px solid #d54113;
-    margin-bottom: 30px;
-    padding: 8px;
-    transition: all 0.23s ease-in-out;
-}
-
-#add-form textarea:hover {
-    border-bottom: 3px solid #333333;
-}
-
-#add-form textarea:active {
-    background-color: #d54113;
-}
-
 #logcont input {
     background: none;
     margin: 10px;
@@ -641,6 +613,7 @@ body {
 #logo {
     font-family: Blaster;
     font-style: italic;
+    font-size: 26px;
     color: #00004d;
     letter-spacing: 1px;
 }
@@ -663,7 +636,7 @@ body {
 
 #first-link {
     padding-right: 6px;
-    border-right: solid 1px #ccc;
+    border-left: solid 1px #ccc;
 }
 
 
@@ -678,13 +651,6 @@ body {
     border-radius: 12px;
     background-color: #d54113;
     line-height: 17px;
-}
-
-.icons {
-    top: 12px;
-    left: -2px;
-    margin-left: 30px;
-    position: relative;
 }
 
 #adminbody {
@@ -845,3 +811,72 @@ button:focus {
     border: 1px solid #EDD;
     color: #A66;
 }
+
+.inputGroup {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 1em 0 1em 0;
+    max-width: 190px;
+    position: relative;
+}
+
+.inputGroup input {
+    font-size: 90%;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid rgb(213 65 19);
+    background-color: transparent;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.inputGroup textarea {
+    font-size: 90%;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid rgb(213 65 19);
+    background-color: transparent;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.inputGroup label {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0.8em;
+    margin-left: 0.5em;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgb(51, 51, 51);
+}
+
+.inputGroup :is(input:focus,
+input:valid)~label {
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1.3em;
+    padding: 0.4em;
+    background-color: #e8e8e8;
+}
+
+.inputGroup :is(input:focus,
+input:valid) {
+    border-color: rgb(51 51 51);
+}
+
+.inputGroup :is(textarea:focus,
+textarea:valid)~label {
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1.3em;
+    padding: 0.4em;
+    background-color: #e8e8e8;
+}
+
+.inputGroup :is(textarea:focus,
+textarea:valid) {
+    border-color: rgb(51 51 51);
+}
+
+
+/*Custom upload file style*/

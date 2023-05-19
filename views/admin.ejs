@@ -10,9 +10,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <script>
+        function toogleFullscreen(image) {
+            image.classList.toggle('fullscreen');
+            console.log('hi')
+        }
+    </script>
 </head>
 
 <body id="adminbody">
+
+
+
+
 
 
     <nav id="scanfcode" class="navbar">
@@ -26,8 +36,11 @@
             <div class="collapse navbar-collapse" id="myNavbar">
 
                 <ul id="link" class="nav navbar-nav navbar-right">
+
+
+
                     <li class="dropdown" id="first-link">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Weiteres <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="./img/icons/punkte.png" height="24px"></a>
                         <ul class="dropdown-menu">
                             <li><a href="https://www.et-ing.at/">Homepage</a></li>
                             <li><a href="https://vrm.victronenergy.com/login">VRM Portal</a></li>
@@ -35,7 +48,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/"><img class="icons" src="./img/icons/logout.png" height="20px" /></a>
+                        <a href="/"><img class="icons" src="./img/icons/logout.png" height="24px" /></a>
                     </li>
                 </ul>
             </div>
@@ -49,17 +62,27 @@
         <p style="font-family: Monserrat; font-size: 20px;">Willkommen zurück, Udo</p>
         <br><br>
 
-
         <form id="add-form" action="/api/news" method="POST" enctype="multipart/form-data">
 
-            <input type="text" name="title" placeholder="Titel" required>
-            <br>
-            <input type="text" name="hashtag" placeholder="Hashtag" required>
-            <br>
-            <textarea placeholder="Deine News" name="content" required></textarea><br>
+            <div class="inputGroup">
+                <input type="text" name="title" required>
+                <label for="name">Titel</label>
+            </div>
+            <div class="inputGroup">
+                <input type="text" name="hashtag" required>
+                <label for="name"># Hashtag</label>
+            </div>
+            <div class="inputGroup">
+                <textarea name="content" required></textarea>
+                <label for="name">Content</label>
+            </div>
 
-            <label for="picture">Picture:</label>
-            <input type="file" id="picture" name="picture" accept="image/jpeg, image/png, image/gif"><br>
+
+
+
+
+            <input type="file" name="picture" id="picture" accept="image/jpeg, image/png, image/gif,video/mp4">
+
             <button id="addfeed" type="submit">Add News Item</button>
         </form>
         <span style="font-family: Monserrat;     font-size: 26px;">Deine Aktiven News Feeds</span>
@@ -69,14 +92,11 @@
                 <% for (const newsItem of newsItems) { %>
                     <div class="news-item" data-id="<%= newsItem._id %>">
                         <div id="imgcontainer">
-
                             <% if (newsItem.picture) { %>
-                                <% console.log(newsItem.picture); %>
-                                    <% console.log(newsItem.picture); %>
-                                        <img class="upimgstyle" src="<%= newsItem.picture %>" alt="<%= newsItem.title %>">
-
-                                        <% } %>
-
+                                <img src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; 
+    object-fit: cover;
+    border-radius: 21px;" alt="News Image">
+                                <% } %>
                         </div>
                         <h2 class="h2cont">
                             <%= newsItem.title %>
@@ -85,7 +105,7 @@
                         <p class="pcont">
                             <%= newsItem.content %>
                         </p>
-                        <span style="text-align: left; color: #d54113;"><%= newsItem.hashtag %></span>
+                        <span style="text-align: left; color: #d54113;"># <%= newsItem.hashtag %></span>
                         <br><br>
                         <form class="delete-form" action="/api/news/${newsItem._id}" method="DELETE">
                             <input type="hidden" name="id" value="<%= newsItem._id %>">
@@ -108,11 +128,121 @@
     <input type="checkbox" class="alertCheckbox" autocomplete="off" />
     <div class="alert error">
       <span class="alertClose">X</span>
-      <span class="alertText">Bitte lade die Seite nach Änderungen neu ! 
+      <span class="alertText">Bitte lade die Seite nach Änderungen neu !
+        Update 2.0 !!Videos sind noch nicht 100% fehlerfrei abspielbar!! 
       <br class="clear"/></span>
     </div>
   </label>
+    <script>
+        var isAdvancedUpload = function() {
+            var div = document.createElement('div');
+            return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+        }();
 
+        let draggableFileArea = document.querySelector(".drag-file-area");
+        let browseFileText = document.querySelector(".browse-files");
+        let uploadIcon = document.querySelector(".upload-icon");
+        let dragDropText = document.querySelector(".dynamic-message");
+        let fileInput = document.querySelector(".default-file-input");
+        let cannotUploadMessage = document.querySelector(".cannot-upload-message");
+        let cancelAlertButton = document.querySelector(".cancel-alert-button");
+        let uploadedFile = document.querySelector(".file-block");
+        let fileName = document.querySelector(".file-name");
+        let fileSize = document.querySelector(".file-size");
+        let progressBar = document.querySelector(".progress-bar");
+        let removeFileButton = document.querySelector(".remove-file-icon");
+        let uploadButton = document.querySelector(".upload-button");
+        let fileFlag = 0;
+
+        fileInput.addEventListener("click", () => {
+            fileInput.value = '';
+            console.log(fileInput.value);
+        });
+
+        fileInput.addEventListener("change", e => {
+            console.log(" > " + fileInput.value)
+            uploadIcon.innerHTML = 'check_circle';
+            dragDropText.innerHTML = 'File Dropped Successfully!';
+            document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: 0;"> browse file</span></span>`;
+            uploadButton.innerHTML = `Upload`;
+            fileName.innerHTML = fileInput.files[0].name;
+            fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
+            uploadedFile.style.cssText = "display: flex;";
+            progressBar.style.width = 0;
+            fileFlag = 0;
+        });
+
+        uploadButton.addEventListener("click", () => {
+            let isFileUploaded = fileInput.value;
+            if (isFileUploaded != '') {
+                if (fileFlag == 0) {
+                    fileFlag = 1;
+                    var width = 0;
+                    var id = setInterval(frame, 50);
+
+                    function frame() {
+                        if (width >= 390) {
+                            clearInterval(id);
+                            uploadButton.innerHTML = `<span class="material-icons-outlined upload-button-icon"> check_circle </span> Uploaded`;
+                        } else {
+                            width += 5;
+                            progressBar.style.width = width + "px";
+                        }
+                    }
+                }
+            } else {
+                cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+            }
+        });
+
+        cancelAlertButton.addEventListener("click", () => {
+            cannotUploadMessage.style.cssText = "display: none;";
+        });
+
+        if (isAdvancedUpload) {
+            ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"].forEach(evt =>
+                draggableFileArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                })
+            );
+
+            ["dragover", "dragenter"].forEach(evt => {
+                draggableFileArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    uploadIcon.innerHTML = 'file_download';
+                    dragDropText.innerHTML = 'Drop your file here!';
+                });
+            });
+
+            draggableFileArea.addEventListener("drop", e => {
+                uploadIcon.innerHTML = 'check_circle';
+                dragDropText.innerHTML = 'File Dropped Successfully!';
+                document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
+                uploadButton.innerHTML = `Upload`;
+
+                let files = e.dataTransfer.files;
+                fileInput.files = files;
+                console.log(files[0].name + " " + files[0].size);
+                console.log(document.querySelector(".default-file-input").value);
+                fileName.innerHTML = files[0].name;
+                fileSize.innerHTML = (files[0].size / 1024).toFixed(1) + " KB";
+                uploadedFile.style.cssText = "display: flex;";
+                progressBar.style.width = 0;
+                fileFlag = 0;
+            });
+        }
+
+        removeFileButton.addEventListener("click", () => {
+            uploadedFile.style.cssText = "display: none;";
+            fileInput.value = '';
+            uploadIcon.innerHTML = 'file_upload';
+            dragDropText.innerHTML = 'Drag & drop any file here';
+            document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
+            uploadButton.innerHTML = `Upload`;
+        });
+    </script>
     <script>
         // Listen for form submission to delete a news item
         const deleteForms = document.querySelectorAll('.delete-form');
