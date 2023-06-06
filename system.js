@@ -14,6 +14,24 @@ const { MongoClient, ObjectId } = require('mongodb');
 const fs = require('fs');
 const uploadDir = 'public/img/upl/';
 
+
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', function connection(ws) {
+    ws.on('message', function incoming(message) {
+        // Process the incoming message (execute predefined commands, etc.)
+        // Send the output back to the client via the WebSocket connection
+        ws.send(`Server response: ${message}`);
+    });
+});
+
+
+
+
+
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
