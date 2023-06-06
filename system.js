@@ -109,7 +109,7 @@ const storage = multer.diskStorage({
 //http://localhost:3000/img/upl/1684486407232-logow.png
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 50 * 1024 * 1024 }, // Limit the picture file size to 5 MB
+    limits: { fileSize: 10 * 1024 * 1024 }, // Limit the picture file size to 10 MB
     fileFilter: function(req, file, cb) {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4']; // Specify the allowed picture file types
         if (!allowedTypes.includes(file.mimetype)) {
@@ -120,20 +120,23 @@ const upload = multer({
     }
 });
 
-// Add a new API endpoint for uploading a picture
-app.post('/api/picture', upload.single('picture'), (req, res) => {
+
+// Add a new API endpoint for uploading a file
+app.post('/api/upload', upload.single('file'), (req, res) => {
     if (req.file) {
         const pictureUrl = req.protocol + '://' + req.get('host') + './img/upds/' + req.file.filename; // Generate the picture URL
         res.json({ pictureUrl: pictureUrl }); // Return the picture URL to the client
     } else {
-        res.status(400).json({ error: 'No picture uploaded.' });
+        res.status(400).json({ error: 'No file uploaded.' });
     }
 });
 
 // Add a new API endpoint for adding a news item with a picture
 app.post('/api/news', upload.single('picture'), (req, res) => {
     const newsItems = {
+        autor: req.body.autor,
         title: req.body.title,
+        timestamp: Date.now(),
         hashtag: req.body.hashtag,
         content: req.body.content,
         picture: req.file ? req.protocol + '://' + req.get('host') + '/img/upl/' + req.file.filename : undefined // Save the picture URL in the news item if a picture is uploaded

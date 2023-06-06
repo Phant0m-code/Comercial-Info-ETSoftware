@@ -16,6 +16,7 @@
             console.log('hi')
         }
     </script>
+
 </head>
 
 <body id="adminbody">
@@ -63,13 +64,16 @@
         <br><br>
 
         <form id="add-form" action="/api/news" method="POST" enctype="multipart/form-data">
-
+            <div class="inputGroup">
+                <input type="text" name="autor">
+                <label for="name">Dein Name</label>
+            </div>
             <div class="inputGroup">
                 <input type="text" name="title" required>
                 <label for="name">Titel</label>
             </div>
             <div class="inputGroup">
-                <input type="text" name="hashtag" required>
+                <input type="text" name="hashtag">
                 <label for="name"># Hashtag</label>
             </div>
             <div class="inputGroup">
@@ -83,7 +87,9 @@
 
             <input type="file" name="picture" id="picture" accept="image/jpeg, image/png, image/gif,video/mp4">
 
-            <button id="addfeed" type="submit">Add News Item</button>
+            <button id="addfeed" type="submit">Bestätigen</button>
+
+
         </form>
         <span style="font-family: Monserrat;     font-size: 26px;">Deine Aktiven News Feeds</span>
 
@@ -93,11 +99,16 @@
                     <div class="news-item" data-id="<%= newsItem._id %>">
                         <div id="imgcontainer">
                             <% if (newsItem.picture) { %>
-                                <img src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; 
-    object-fit: cover;
-    border-radius: 21px;" alt="News Image">
-                                <% } %>
+                                <% if (newsItem.picture.endsWith('.mp4')) { %>
+                                    <video class="hov" src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" autoplay controls style="width: 300px; border-radius: 21px;"></video>
+                                    <% } else { %>
+                                        <img class="hov" src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; object-fit: cover; border-radius: 21px;" alt="News Image">
+                                        <% } %>
+                                            <% } else { %>
+                                                <img class="hov" src="/img/placeholderimg.png" style="width: 300px; object-fit: cover; border-radius: 21px;" alt="Default Template Image">
+                                                <% } %>
                         </div>
+                        <div id="fullscreen-img"></div>
                         <h2 class="h2cont">
                             <%= newsItem.title %>
                         </h2>
@@ -113,8 +124,13 @@
                         </form>
 
                         <p id="CID" style="font-size:10px">
-                            Container-ID:<br>
+                            Container-ID:
                             <%= newsItem._id %>
+                                <br>Timestamp:
+                                <%= newsItem.timestamp %>
+                                    <br>Verfasser:
+                                    <%= newsItem.autor %>
+
                         </p>
                     </div>
                     <% } %>
@@ -129,7 +145,7 @@
     <div class="alert error">
       <span class="alertClose">X</span>
       <span class="alertText">Bitte lade die Seite nach Änderungen neu !
-        Update 2.0 !!Videos sind noch nicht 100% fehlerfrei abspielbar!! 
+      
       <br class="clear"/></span>
     </div>
   </label>
@@ -242,6 +258,36 @@
             document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
             uploadButton.innerHTML = `Upload`;
         });
+    </script>
+    <script>
+        function toggleFullscreen(element) {
+            const fullscreenDiv = document.getElementById('fullscreen-img');
+            fullscreenDiv.style.backgroundImage = `url('${element.src}')`;
+
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+
+            fullscreenDiv.classList.add('fullscreen', 'active');
+        }
+
+        document.addEventListener('fullscreenchange', exitFullscreenHandler);
+        document.addEventListener('mozfullscreenchange', exitFullscreenHandler);
+        document.addEventListener('webkitfullscreenchange', exitFullscreenHandler);
+        document.addEventListener('msfullscreenchange', exitFullscreenHandler);
+
+        function exitFullscreenHandler() {
+            const fullscreenDiv = document.getElementById('fullscreen-img');
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                fullscreenDiv.classList.remove('active');
+            }
+        }
     </script>
     <script>
         // Listen for form submission to delete a news item
