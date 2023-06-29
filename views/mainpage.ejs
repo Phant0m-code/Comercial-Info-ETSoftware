@@ -234,19 +234,24 @@
                         <div class="news-item-main">
                             <div id="imgcontainer">
                                 <% if (newsItem.picture) { %>
-                                    <img src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; 
-        object-fit: cover;
-        border-radius: 21px;" alt="News Image">
-                                    <% } %>
+                                    <% if (newsItem.picture.endsWith('.mp4')) { %>
+                                        <video class="hov" src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" autoplay controls style="width: 300px; border-radius: 21px;"></video>
+                                        <% } else { %>
+                                            <img class="hov" src="<%= newsItem.picture %>" onclick="toggleFullscreen(this)" style="width: 300px; object-fit: cover; border-radius: 21px;" alt="News Image">
+                                            <% } %>
+                                                <% } else { %>
+                                                    <img class="hov" src="/img/placeholderimg.png" style="width: 300px; object-fit: cover; border-radius: 21px;" alt="Default Template Image">
+                                                    <% } %>
                             </div>
+                            <div id="fullscreen-img"></div>
                             <h2 class="h2cont">
                                 <%= newsItem.title %>
                             </h2>
-                            <hr style="margin-top:30px;">
+                            <hr>
                             <p class="pcont">
                                 <%= newsItem.content %>
                             </p>
-                            <span style="text-align: left; color: #d54113;"><%= newsItem.hashtag %></span>
+                            <span style="text-align: left; color: #d54113;"># <%= newsItem.hashtag %></span>
                         </div>
                         <% }); %>
                 </div>

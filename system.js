@@ -50,7 +50,7 @@ console.log(__dirname);
 const someRouter = require('./routes/pages');
 console.log('done');
 app.use(someRouter);
-//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 
+//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
 // Add the middleware function to handle errors
 app.use(errorHandler);
 
@@ -74,8 +74,9 @@ app.use(passport.session());
 app.use(flash());
 
 dotenv.config({ path: './.env' });
-
-// Set up static folder for public assets
+require('dotenv').config()
+console.log(process.env)
+    // Set up static folder for public assets
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'img')));
 
@@ -86,8 +87,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 passport.use(
     new LocalStrategy((username, password, done) => {
         // Implement your authentication logic here
-        if (username === 'a' && password === 'a') {
-            return done(null, { id: 1, username: 'a' });
+        if (username === process.env.BUCKET && password === process.env.SECRET_KEY) {
+            return done(null, { id: 1, username: process.env.SECRET_KEY });
         } else {
             return done(null, false, { message: 'Invalid username or password' });
         }
