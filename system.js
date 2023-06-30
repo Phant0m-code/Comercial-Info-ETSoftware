@@ -59,16 +59,18 @@ function errorHandler(err, req, res, next) {
     res.status(500).redirect('/login');
 }
 
-// Set up session middleware
-app.use(
-    session({
-        secret: 'your-secret-key',
-        resave: false,
-        saveUninitialized: false
-    })
-);
+const session1 = require('express-session')
+const MemoryStore = require('memorystore')(session)
 
-// Set up passport middleware
+app.use(session1({
+        cookie: { maxAge: 86400000 },
+        store: new MemoryStore({
+            checkPeriod: 86400000 // prune expired entries every 24h
+        }),
+        resave: false,
+        secret: 'keyboard cat'
+    }))
+    // Set up passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
