@@ -231,7 +231,7 @@
                 <div style="font-family:Monserrat;" class="newsmain">
                     <!-- News items will be added here -->
                     <% newsItems.forEach(function(newsItem) { %>
-                        <div class="news-item-main">
+                        <div class="news-item-main-home">
                             <div id="imgcontainer">
                                 <% if (newsItem.picture) { %>
                                     <% if (newsItem.picture.endsWith('.mp4')) { %>
@@ -276,7 +276,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>ä
-    <script src="js/timecicle.js"></script>
+    <script src="js/timicle.js"></script>
     <script>
         // Listen for form submission to add a new news item
         const addForm = document.querySelector('#add-form');

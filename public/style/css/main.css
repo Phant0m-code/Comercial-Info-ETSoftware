@@ -372,6 +372,26 @@ body {
     margin-bottom: 2%;
 }
 
+.news-item-main-home {
+    border-bottom-right-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    border-top-right-radius: 8px;
+    margin: 3%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 8px;
+    color: white;
+    padding: 30px;
+    /* margin-left: 20%; */
+    text-align: center;
+    width: auto;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.781);
+    height: auto;
+    background: rgb(41, 41, 41);
+    background: radial-gradient(circle, rgb(12 12 12) 0%, rgb(64 64 64) 100%);
+    /* padding-bottom: 18%; */
+    /* margin-bottom: 2%;
+}
+
 .newsmain {
     display: flex;
     /* margin: 2%; */
@@ -959,11 +979,9 @@ input:valid)~label {
     margin: 0em;
     margin-left: 1.3em;
     padding: 0.4em;
-<<<<<<< HEAD
-    background-color: #e8e8e800;
-=======
-    background-color: none;
->>>>>>> main
+    <<<<<<< HEAD background-color: #e8e8e800;
+    =======background-color: none;
+    >>>>>>>main
 }
 
 .inputGroup :is(input:focus,
