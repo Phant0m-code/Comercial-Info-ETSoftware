@@ -13,7 +13,9 @@ const mongoose = require('mongoose');
 const { MongoClient, ObjectId } = require('mongodb');
 const fs = require('fs');
 const uploadDir = 'public/img/upl/';
-
+if (typeof(PhusionPassenger) != 'undefined') {
+    PhusionPassenger.configure({ autoInstall: false });
+}
 
 const WebSocket = require('ws');
 
@@ -230,6 +232,9 @@ app.delete('/api/news/:id', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('Newsfeed app listening on port 3000!');
-});
+if (typeof(PhusionPassenger) != 'undefined') {
+    app.listen('passenger');
+    console.log('PhusionPassenger')
+} else {
+    app.listen(3000);
+}
