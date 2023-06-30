@@ -115,6 +115,7 @@ const storage = multer.diskStorage({
     }
 });
 //http://localhost:3000/img/upl/1684486407232-logow.png
+
 const upload = multer({
     storage: storage,
     limits: { fileSize: 10 * 1024 * 1024 }, // Limit the picture file size to 10 MB
