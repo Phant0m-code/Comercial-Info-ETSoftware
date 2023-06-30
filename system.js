@@ -17,21 +17,6 @@ if (typeof(PhusionPassenger) != 'undefined') {
     PhusionPassenger.configure({ autoInstall: false });
 }
 
-const WebSocket = require('ws');
-
-const wss = new WebSocket.Server({ port: 8080 });
-
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        // Process the incoming message (execute predefined commands, etc.)
-        // Send the output back to the client via the WebSocket connection
-        ws.send(`Server response: ${message}`);
-    });
-});
-
-
-
-
 
 
 if (!fs.existsSync(uploadDir)) {
@@ -91,8 +76,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 passport.use(
     new LocalStrategy((username, password, done) => {
         // Implement your authentication logic here
-        if (username === process.env.BUCKET && password === process.env.SECRET_KEY) {
-            return done(null, { id: 1, username: process.env.SECRET_KEY });
+        if (username === 'admin' && password === 'admin') {
+            return done(null, { id: 1, username: 'admin' });
         } else {
             return done(null, false, { message: 'Invalid username or password' });
         }
