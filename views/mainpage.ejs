@@ -7,8 +7,8 @@
         function reloadPage() {
             location.reload();
         }
-        // Reload the page every 60 seconds (60000 milliseconds)
-        setInterval(reloadPage, 60000);
+        // Reload the page every  seconds (--- milliseconds)
+        setInterval(reloadPage, 2000000);
     </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +23,17 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 
+    <style>
+        #container {
+            display: none;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: 999999 !important;
+        }
+    </style>
 </head>
 
 <body style="overflow-x: hidden;">
@@ -49,8 +60,27 @@
         </object></div>
 
 
+        <div id="container"> <video style="    position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;" src="video/ad.mp4" muted loop autoplay></video></div>
+        <script>
+            function showContainer() {
+                const container = document.getElementById('container');
+                container.style.display = 'block';
+                setTimeout(hideContainer, 16000); // Hide the container after 14 seconds
+            }
 
+            function hideContainer() {
+                const container = document.getElementById('container');
+                container.style.display = 'none';
+                setTimeout(showContainer, 48000); // Show the container again after 34 seconds (48 - 14)
+            }
 
+            // Initially, hide the container
+            hideContainer();
+        </script>
         <div class="content" id="content4">
             <div id="team_cont">
                 <h1>Das Team</h1>
